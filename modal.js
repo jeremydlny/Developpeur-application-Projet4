@@ -43,12 +43,6 @@ function sendmodal() {
     e.preventDefault();
     if (verifmodal(Data)) {
 
-      document.querySelector(".content").style.height = "867px";
-      document.querySelector(".confirm-modal-message").style.display = "flex";
-      document.querySelector(".confirm-modal-message").style.justifyContent = "center";
-      document.querySelector(".confirm-modal-message").style.alignItems = "center";
-
-
       document.getElementById("modalB").style.display = "none";
       document.querySelector(".confirm-modal-message").style.display = "block";
       document.querySelector("#closemodal").style.display = "block";
