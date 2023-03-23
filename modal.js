@@ -76,7 +76,6 @@ function verifmodal(Data) {
 
   let valid = true;
 
-  // console.log(Data[0].children[2].value);
   // vérification si la valeur est une chaîne de caractères
   if (!Data[0].children[2].value.match(stringRegex) || Data[0].children[2].value.length < 2) {
     document.getElementById("FirstNameError").innerText = errorMessages.firstName;
@@ -86,7 +85,6 @@ function verifmodal(Data) {
     document.getElementById("FirstNameError").innerText = "";
   }
 
-  // console.log(Data[1].children[2].value);
   // vérification si la valeur est une chaîne de caractères
   if (!Data[1].children[2].value.match(stringRegex) || Data[1].children[2].value.length < 2) {
     document.getElementById("LastNameError").innerText = errorMessages.lastName;
@@ -95,7 +93,6 @@ function verifmodal(Data) {
     document.getElementById("LastNameError").innerText = "";
   }
 
-  // console.log(Data[2].children[2].value);
   // vérification si la valeur est une adresse email
   if (!Data[2].children[2].value.match(emailRegex)) {
     document.getElementById("EmailError").innerText = errorMessages.email;
@@ -104,7 +101,6 @@ function verifmodal(Data) {
     document.getElementById("EmailError").innerText = "";
   }
 
-  // console.log(Data[3].children[2].value);
   //vérification si la valeur est une date
   if (!Data[3].children[2].value.match(date_regex)) {
     document.getElementById("BirthdateError").innerText = errorMessages.birthdate;
@@ -143,9 +139,7 @@ function verifmodal(Data) {
   } else {
     document.getElementById("CheckboxError").innerText = "";
   }
-  // console.log(document.getElementById("checkbox1").checked);
 
-  // console.log(valid);
   // vérification si le formulaire est valide
   if (valid) {
     return true;

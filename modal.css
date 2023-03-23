@@ -43,7 +43,7 @@ img {
 
 .main-navbar {
   float: right;
-  margin-right: none;
+  /* margin-right: none; */
 }
 
 .topnav a {
@@ -493,7 +493,7 @@ input {
 
 .hero-section {
   height: 657px;
-  width: 1240px;
+  width: 95%;
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -574,7 +574,7 @@ input {
 
 @media screen and (max-width: 1024px) {
 
-  /*  .main-navbar {
+  /* .main-navbar {
     margin-top: 65px;
   } */
 
@@ -912,6 +912,13 @@ input {
   }
 
 }
+
+/* @media screen and (max-width: 462px) {
+  .main-navbar {
+    margin-top: 17px;
+  }
+
+} */
 
 @keyframes modalopen {
   from {
