@@ -91,7 +91,16 @@ function verifmodal(Data) {
   // Variables des regex
   const stringRegex = /^[a-zA-Z-]+$/;
   const emailRegex = /^\w+([.-]?\w+)@\w+([.-]?\w+).(.\w{2,3})+$/;
+  const today = new Date();
+  const minBirthdate = new Date(today.getFullYear() - 118, today.getMonth(), today.getDate());
+  const maxBirthdate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+
   const date_regex = /^[0-9]{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])/;
+
+  const birthdateValue = Data[3].children[2].value.trim();
+  const birthdate = new Date(birthdateValue);
+
+  // Variable qui contient tous les éléments HTML ayant la classe "checkbox-input" et le type "radio"
   const locationInput = document.querySelectorAll(
     '.checkbox-input[type="radio"]'
   );
@@ -101,63 +110,53 @@ function verifmodal(Data) {
 
   // Vérification si la valeur est une chaîne de caractères
   // Data[0].children[2].value.match(stringRegex) retourne true si la valeur est une chaîne de caractères ou Data[0].children[2].value.length retourne la longueur de la chaîne de caractères 
-  // Si la valeur n'est pas valide, on affiche le message d'erreur
-  if (!Data[0].children[2].value.match(stringRegex) || Data[0].children[2].value.length < 2) {
+  if (!Data[0].children[2].value.trim().match(stringRegex) || Data[0].children[2].value.length < 2) {
     document.getElementById("FirstNameError").innerText = errorMessages.firstName;
     valid = false;
-  }
-  // Si la valeur est valide, on efface le message d'erreur
-  else {
+  } else {
     document.getElementById("FirstNameError").innerText = "";
   }
 
+
   // Vérification si la valeur est une chaîne de caractères
   // Data[1].children[2].value.match(stringRegex) retourne true si la valeur est une chaîne de caractères ou Data[1].children[2].value.length retourne la longueur de la chaîne de caractères
-  // Si la valeur n'est pas valide, on affiche le message d'erreur
-  if (!Data[1].children[2].value.match(stringRegex) || Data[1].children[2].value.length < 2) {
+  if (!Data[1].children[2].value.trim().match(stringRegex) || Data[1].children[2].value.length < 2) {
     document.getElementById("LastNameError").innerText = errorMessages.lastName;
     valid = false;
-  }
-  // Si la valeur est valide, on efface le message d'erreur
-  else {
+  } else {
     document.getElementById("LastNameError").innerText = "";
   }
 
+
   // Vérification si la valeur est une adresse email
   // Data[2].children[2].value.match(emailRegex) retourne true si la valeur correspond à l'expression régulière
-  // Si la valeur n'est pas valide, on affiche le message d'erreur
-  if (!Data[2].children[2].value.match(emailRegex)) {
+  if (!Data[2].children[2].value.trim().match(emailRegex)) {
     document.getElementById("EmailError").innerText = errorMessages.email;
     valid = false;
-  }
-  // Si la valeur est valide, on efface le message d'erreur
-  else {
+  } else {
     document.getElementById("EmailError").innerText = "";
   }
 
-  // Vérification si la valeur est une date
-  // Data[3].children[2].value.match(date_regex) retourne true si la valeur correspond à l'expression régulière
-  // Si la valeur n'est pas valide, on affiche le message d'erreur
-  if (!Data[3].children[2].value.match(date_regex)) {
+
+  if (!birthdateValue.match(date_regex) || birthdate <= minBirthdate || birthdate > maxBirthdate) {
     document.getElementById("BirthdateError").innerText = errorMessages.birthdate;
     valid = false;
-  }
-  // Si la valeur est valide, on efface le message d'erreur
-  else {
+  } else {
     document.getElementById("BirthdateError").innerText = "";
   }
 
+
   // Vérification si la valeur est un nombre entre 0 et 9
-  // Data[4].children[2].value.match(/^[0-9]$/) retourne true si la valeur correspond à l'expression régulière
-  // Si la valeur n'est pas valide, on affiche le message d'erreur
   if (Data[4].children[2].value === "") {
     document.getElementById("QuantityError").innerText = errorMessages.quantity;
     valid = false;
-  }
-  // Si la valeur est valide, on efface le message d'erreur
-  else {
+  } else if (!/^[0-9]{1}$/.test(Data[4].children[2].value)) {
+    document.getElementById("QuantityError").innerText = errorMessages.quantity;
+    valid = false;
+  } else {
     document.getElementById("QuantityError").innerText = "";
   }
+
 
   // Boucle pour vérifier si une ville est sélectionnée
   let count = 0;
@@ -170,27 +169,26 @@ function verifmodal(Data) {
     }
   }
 
+
   // Vérification si une ville est sélectionnée
   // Si aucune ville n'est sélectionnée, on affiche le message d'erreur
   if (count == 0) {
     document.getElementById("LocationError").innerText = errorMessages.location;
     valid = false;
-  }
-  // Si une ville est sélectionnée, on efface le message d'erreur
-  else {
+  } else {
     document.getElementById("LocationError").innerText = "";
   }
+
 
   // Vérification si la checkbox est cochée
   // Si la checkbox n'est pas cochée, on affiche le message d'erreur
   if (!document.getElementById("checkbox1").checked) {
     document.getElementById("CheckboxError").innerText = errorMessages.checkbox;
     valid = false;
-  }
-  // Si la checkbox est cochée, on efface le message d'erreur
-  else {
+  } else {
     document.getElementById("CheckboxError").innerText = "";
   }
+
 
   // Vérification si le formulaire est valide
   // Si le formulaire est valide, on retourne true
