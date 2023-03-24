@@ -1,58 +1,80 @@
+// Initialisation de la page avec des écouteurs d'événements sur les boutons pour ouvrir et fermer la fenêtre modale
 function init() {
+  // modalBtn est un tableau qui contient tous les éléments HTML ayant la classe .modal-btn
   const modalBtn = document.querySelectorAll(".modal-btn");
+  // closeBtn est un tableau qui contient tous les éléments HTML ayant la classe .close
   const closeBtn = document.querySelectorAll(".close");
+  // closeBtnsenddata est un tableau qui contient tous les éléments HTML ayant l'ID closemodal
   const closeBtnsenddata = document.querySelectorAll("#closemodal");
 
+  // Un événement click est ajouté à chaque élément du tableau avec addEventListener() et l'appel de la fonction launchModal().
   modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
+  // Un événement click est ajouté à chaque élément du tableau avec addEventListener() et l'appel de la fonction closeModal().
   closeBtnsenddata.forEach((btn) => btn.addEventListener("click", closeModal));
+  // Un événement click est ajouté à chaque élément du tableau avec addEventListener() et l'appel de la fonction closeModal().
   closeBtn.forEach((btn) => btn.addEventListener("click", closeModal));
-
+  // Envoi des données du formulaire
   sendmodal();
 }
 
 init();
 
 // Ouverture de la fenêtre de formulaire
+// Fonction appelée lorsqu'un élément ayant la classe "modal-btn" est cliqué
 function launchModal() {
+  // Sélection de l'élément HTML ayant la classe "bground" et stockage dans la variable modalbg
   const modalbg = document.querySelector(".bground");
+  // Modification de la propriété CSS "display" de modalbg pour afficher la fenêtre modale
   modalbg.style.display = "block";
 }
 
 // Fermeture de la fenêtre de formulaire
+// Fonction appelée lorsqu'un élément ayant la classe "close" est cliqué
 function closeModal() {
+  // Sélection de l'élément HTML ayant la classe "bground" et stockage dans la variable modalbg
   const modalbg = document.querySelector(".bground");
+  // Modification de la propriété CSS "display" de modalbg pour cacher la fenêtre modale
   modalbg.style.display = "none";
 }
 
 // Menu responsive
 function editNav() {
+  // Sélection de l'élément HTML ayant l'ID "myTopnav" et stockage dans la variable x
   var x = document.getElementById("myTopnav");
+  // Si la classe "topnav" est présente, on l'enlève et on ajoute la classe "responsive"
   if (x.className === "topnav") {
     x.className += " responsive";
+    // Sinon, on ajoute la classe "topnav" et on enlève la classe "responsive"
   } else {
     x.className = "topnav";
   }
 }
 
 // Envoi du formulaire
+// Fonction appelée lorsqu'un élément ayant l'ID "SendData" est cliqué
 function sendmodal() {
-
+  // Sélection de l'élément HTML ayant l'ID "SendData" et stockage dans la variable senddata
+  // Ajout d'un écouteur d'événement sur le bouton "Envoyer" pour envoyer les données du formulaire
   let senddata = document.getElementById("SendData");
   senddata.addEventListener("click", function (e) {
+    // Sélection de tous les éléments HTML ayant la classe "formData" et stockage dans la variable Data
     const Data = document.querySelectorAll(".formData");
     e.preventDefault();
+    // Vérification du formulaire et affichage du message de confirmation
     if (verifmodal(Data)) {
-
       document.getElementById("modalB").style.display = "none";
       document.querySelector(".confirm-modal-message").style.display = "block";
       document.querySelector("#closemodal").style.display = "block";
-    } else {
+    }
+    // Si le formulaire n'est pas valide, affichage d'un message d'erreur
+    else {
       alert("Veuillez remplir tous les champs");
     }
   });
 }
 
 // Vérification du formulaire
+// Fonction appelée lorsqu'un élément ayant l'ID "SendData" est cliqué
 function verifmodal(Data) {
 
   // Variables des messages d'erreur
@@ -66,7 +88,7 @@ function verifmodal(Data) {
     checkbox: "Vous devez vérifier que vous acceptez les termes et conditions.",
   };
 
-  // Regex
+  // Variables des regex
   const stringRegex = /^[a-zA-Z-]+$/;
   const emailRegex = /^\w+([.-]?\w+)@\w+([.-]?\w+).(.\w{2,3})+$/;
   const date_regex = /^[0-9]{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])/;
@@ -74,76 +96,109 @@ function verifmodal(Data) {
     '.checkbox-input[type="radio"]'
   );
 
+  // Variable de validation du formulaire
   let valid = true;
 
-  // vérification si la valeur est une chaîne de caractères
+  // Vérification si la valeur est une chaîne de caractères
+  // Data[0].children[2].value.match(stringRegex) retourne true si la valeur est une chaîne de caractères ou Data[0].children[2].value.length retourne la longueur de la chaîne de caractères 
+  // Si la valeur n'est pas valide, on affiche le message d'erreur
   if (!Data[0].children[2].value.match(stringRegex) || Data[0].children[2].value.length < 2) {
     document.getElementById("FirstNameError").innerText = errorMessages.firstName;
     valid = false;
   }
+  // Si la valeur est valide, on efface le message d'erreur
   else {
     document.getElementById("FirstNameError").innerText = "";
   }
 
-  // vérification si la valeur est une chaîne de caractères
+  // Vérification si la valeur est une chaîne de caractères
+  // Data[1].children[2].value.match(stringRegex) retourne true si la valeur est une chaîne de caractères ou Data[1].children[2].value.length retourne la longueur de la chaîne de caractères
+  // Si la valeur n'est pas valide, on affiche le message d'erreur
   if (!Data[1].children[2].value.match(stringRegex) || Data[1].children[2].value.length < 2) {
     document.getElementById("LastNameError").innerText = errorMessages.lastName;
     valid = false;
-  } else {
+  }
+  // Si la valeur est valide, on efface le message d'erreur
+  else {
     document.getElementById("LastNameError").innerText = "";
   }
 
-  // vérification si la valeur est une adresse email
+  // Vérification si la valeur est une adresse email
+  // Data[2].children[2].value.match(emailRegex) retourne true si la valeur correspond à l'expression régulière
+  // Si la valeur n'est pas valide, on affiche le message d'erreur
   if (!Data[2].children[2].value.match(emailRegex)) {
     document.getElementById("EmailError").innerText = errorMessages.email;
     valid = false;
-  } else {
+  }
+  // Si la valeur est valide, on efface le message d'erreur
+  else {
     document.getElementById("EmailError").innerText = "";
   }
 
-  //vérification si la valeur est une date
+  // Vérification si la valeur est une date
+  // Data[3].children[2].value.match(date_regex) retourne true si la valeur correspond à l'expression régulière
+  // Si la valeur n'est pas valide, on affiche le message d'erreur
   if (!Data[3].children[2].value.match(date_regex)) {
     document.getElementById("BirthdateError").innerText = errorMessages.birthdate;
     valid = false;
-  } else {
+  }
+  // Si la valeur est valide, on efface le message d'erreur
+  else {
     document.getElementById("BirthdateError").innerText = "";
   }
 
+  // Vérification si la valeur est un nombre entre 0 et 9
+  // Data[4].children[2].value.match(/^[0-9]$/) retourne true si la valeur correspond à l'expression régulière
+  // Si la valeur n'est pas valide, on affiche le message d'erreur
   if (Data[4].children[2].value === "") {
     document.getElementById("QuantityError").innerText = errorMessages.quantity;
     valid = false;
-  } else {
+  }
+  // Si la valeur est valide, on efface le message d'erreur
+  else {
     document.getElementById("QuantityError").innerText = "";
   }
 
-  // boucle pour vérifier si une ville est sélectionnée
+  // Boucle pour vérifier si une ville est sélectionnée
   let count = 0;
+  // locationInput.length retourne le nombre d'éléments ayant la classe "checkbox-input"
+  // Si aucune ville n'est sélectionnée, count reste à 0
+  // Si une ville est sélectionnée, count est incrémenté de 1
   for (let i = 0; i < locationInput.length; i++) {
     if (locationInput[i].checked) {
       count++;
     }
   }
 
-  // vérification si une ville est sélectionnée
+  // Vérification si une ville est sélectionnée
+  // Si aucune ville n'est sélectionnée, on affiche le message d'erreur
   if (count == 0) {
     document.getElementById("LocationError").innerText = errorMessages.location;
     valid = false;
-  } else {
+  }
+  // Si une ville est sélectionnée, on efface le message d'erreur
+  else {
     document.getElementById("LocationError").innerText = "";
   }
 
-  // vérification si la checkbox est cochée
+  // Vérification si la checkbox est cochée
+  // Si la checkbox n'est pas cochée, on affiche le message d'erreur
   if (!document.getElementById("checkbox1").checked) {
     document.getElementById("CheckboxError").innerText = errorMessages.checkbox;
     valid = false;
-  } else {
+  }
+  // Si la checkbox est cochée, on efface le message d'erreur
+  else {
     document.getElementById("CheckboxError").innerText = "";
   }
 
-  // vérification si le formulaire est valide
+  // Vérification si le formulaire est valide
+  // Si le formulaire est valide, on retourne true
   if (valid) {
     return true;
-  } else {
+  }
+  // Si le formulaire n'est pas valide, on retourne false
+  else {
     return false;
   }
 
